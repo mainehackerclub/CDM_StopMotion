@@ -1,0 +1,1 @@
+You will need to setup openFrameworks on your own system, and copy the app coce over. This will allow cross platform compilation.
