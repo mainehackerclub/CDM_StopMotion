@@ -6,6 +6,7 @@ void ofApp::setup(){
 	camHeight 		= 240;
     videoWidth = 800;
     videoHeight = (int)videoWidth*((float)camHeight/camWidth);
+    frameRate = 10;
 	
     //we can now get back a list of devices.
 	vector<ofVideoDevice> devices = vidGrabber.listDevices();
@@ -20,7 +21,7 @@ void ofApp::setup(){
 	}
     
 	vidGrabber.setDeviceID(1);
-	vidGrabber.setDesiredFrameRate(10);
+	vidGrabber.setDesiredFrameRate(frameRate);
 	vidGrabber.initGrabber(camWidth,camHeight);
 	
     videoArray.reserve(10);
@@ -31,7 +32,7 @@ void ofApp::setup(){
     videoOverlay = new ofTexture();
     videoOverlay->allocate(camWidth,camHeight, GL_RGBA);
 	ofSetVerticalSync(true);
-    ofSetFrameRate(10);
+    ofSetFrameRate(frameRate);
     //ofEnableAlphaBlending();
 }
 
@@ -126,6 +127,11 @@ void ofApp::keyPressed(int key){
                 
                 img2Export.saveImage(exportFile);
             }
+
+            char videoExportCmd[256];
+            sprintf(videoExportCmd, "/usr/local/bin/ffmpeg -r %d -y -i /Users/agross/Documents/stopmotion/export/image-%%03d.png -c:v libx264 -r %d -pix_fmt yuv420p /Users/agross/Documents/stopmotion/export/test.mp4",frameRate,frameRate);
+            
+            system(videoExportCmd);
         }
     }
 }

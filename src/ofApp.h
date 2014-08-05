@@ -30,6 +30,7 @@ class ofApp : public ofBaseApp{
         int 				camHeight;
         int 				videoWidth;
         int 				videoHeight;
+        int                 frameRate;
     
         bool                playback = false;
         int                 playFrame = 0;
